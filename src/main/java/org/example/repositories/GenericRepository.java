@@ -63,10 +63,11 @@ public abstract class GenericRepository<T> implements IRepository<T> {
     public List<T> findAll() throws SQLException {
         List<T> result = new ArrayList<>();
         String sql = QueryBuilder.buildSelectAllQuery(getTableName());
-        try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                result.add(mapFromResultSet(rs));
+        try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    result.add(mapFromResultSet(rs));
+                }
             }
         }
         return result;

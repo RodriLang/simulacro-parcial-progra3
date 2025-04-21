@@ -9,7 +9,7 @@ public class QueryBuilder {
     }
 
     public static String buildSelectByIdQuery(String tableName) {
-        return "SELECT * FROM " + tableName;
+        return "SELECT * FROM " + tableName + " WHERE id=?";
     }
 
     public static String buildUpdateQuery(String tableName, List<String> fields) {

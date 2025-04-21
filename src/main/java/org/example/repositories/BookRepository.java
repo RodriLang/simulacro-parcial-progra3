@@ -24,7 +24,7 @@ public class BookRepository extends GenericRepository<Book> {
 
     @Override
     protected String getTableName() {
-        return "usuarios";
+        return "libros";
     }
 
     @Override

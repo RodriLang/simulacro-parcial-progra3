@@ -47,14 +47,16 @@ public class LoanRepository extends GenericRepository<Loan> {
     protected Loan mapFromResultSet(ResultSet rs) throws SQLException {
         int libroId = rs.getInt("libro_id");
         int usuarioId = rs.getInt("usuario_id");
+        Date loanDate = rs.getDate("fecha_prestamo");
+        Date returnDate = rs.getDate("fecha_devolucion");
         return Loan.builder()
                 .id(rs.getInt("id"))
                 .book(BookRepository.getInstance().findById(libroId)
                         .orElseThrow(() -> new BookNotFoudException(libroId)))
                 .user(UserRepository.getInstance().findById(usuarioId)
                         .orElseThrow(() -> new UserNotFoudException(usuarioId)))
-                .loanDate(rs.getDate("fecha_prestamo").toLocalDate())
-                .returnDate(rs.getDate("fecha_devolucion").toLocalDate())
+                .loanDate(loanDate.toLocalDate())
+                .returnDate(returnDate != null ? returnDate.toLocalDate() : null)
                 .build();
     }
 
